@@ -8,3 +8,10 @@ func ShowAllStudents(c *gin.Context) {
 		"name": "John Doe",
 	})
 }
+
+func Greeting(c *gin.Context) {
+	name := c.Param("name")
+	c.JSON(200, gin.H{
+		"message": "Olá " + name,
+	})
+}

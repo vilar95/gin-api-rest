@@ -8,5 +8,6 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/students", controller.ShowAllStudents)
+	r.GET("/:name", controller.Greeting)
 	return r
 }
