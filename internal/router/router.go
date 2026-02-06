@@ -9,5 +9,6 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/students", controller.ShowAllStudents)
 	r.GET("/:name", controller.Greeting)
+	r.POST("/students", controller.CreateStudent)
 	return r
 }
