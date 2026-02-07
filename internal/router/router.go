@@ -7,8 +7,12 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-	r.GET("/students", controller.ShowAllStudents)
 	r.GET("/:name", controller.Greeting)
-	r.POST("/students", controller.CreateStudent)
+	r.GET("/all-students", controller.ShowAllStudents)
+	r.POST("/create-student", controller.CreateStudent)
+	r.GET("/student/:id", controller.FetchStudentByID)
+	r.DELETE("/delete-student/:id", controller.DeleteStudent)
+	r.PATCH("/update-student/:id", controller.UpdateStudent)
+	r.GET("student/cpf/:cpf", controller.FetchStudentByCPF)
 	return r
 }
