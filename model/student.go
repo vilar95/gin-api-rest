@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"gopkg.in/validator.v2"
 	"gorm.io/gorm"
 )
@@ -15,7 +14,7 @@ type Student struct {
 
 func ValidateStudentInfo(student *Student) error {
 	if err := validator.Validate(student); err != nil {
-		return fmt.Errorf("validation error: %v", err)
+		return err
 	}
 	return nil
 }
