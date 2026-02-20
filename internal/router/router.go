@@ -7,6 +7,8 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
+	r.Static("/assets", "templates/assets")
 	r.GET("/:name", controller.Greeting)
 	r.GET("/all-students", controller.ShowAllStudents)
 	r.POST("/create-student", controller.CreateStudent)
@@ -14,5 +16,6 @@ func SetupRouter() *gin.Engine {
 	r.DELETE("/delete-student/:id", controller.DeleteStudent)
 	r.PATCH("/update-student/:id", controller.UpdateStudent)
 	r.GET("student/cpf/:cpf", controller.FetchStudentByCPF)
+	r.GET("/index", controller.ShowIndexPage)
 	return r
 }

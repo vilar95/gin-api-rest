@@ -72,15 +72,21 @@ func UpdateStudent(c *gin.Context) {
 		return
 	}
 
-	if err := c.ShouldBindJSON(&student); err != nil {
+    var input model.Student	
+	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
-	if err := model.ValidateStudentInfo(&student); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"validation error": err.Error()})
-		return
-	}
+
+    // Validação manual, já que não usamos model.Student
+    if input.Name == "" || len(input.RG) != 9 || len(input.CPF) != 11 {
+        c.JSON(http.StatusBadRequest, gin.H{"validation error": "Dados inválidos"})
+        return
+    }
+
+	student.Name = input.Name
+	student.RG = input.RG
+	student.CPF = input.CPF
 
 	database.DB.Save(&student)
 	c.JSON(http.StatusOK, student)
@@ -96,4 +102,12 @@ func FetchStudentByCPF(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, student)
+}
+
+func ShowIndexPage(c *gin.Context) {
+	var students []model.Student
+	database.DB.Find(&students)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"students": students,
+	})
 }
